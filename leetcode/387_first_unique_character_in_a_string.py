@@ -18,7 +18,7 @@ from collections import Counter
     ("leetcode", 0),
     ("loveleetcode", 2),
     ("", -1)])
-def test_max_profit(input_and_output):
+def test_first_uniq_char(input_and_output):
     input_string = input_and_output[0]
     expected_output = input_and_output[1]
     predicted_output = firstUniqChar(input_string)
