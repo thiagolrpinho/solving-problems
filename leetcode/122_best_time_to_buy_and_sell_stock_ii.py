@@ -28,9 +28,11 @@ import pytest
 from typing import List
 
 @pytest.mark.parametrize('input_and_output', [
-    ([7,1,5,3,6,4], 7),
-    ([1,2,3,4,5], 4),
-    ([7,6,4,3,1], 0)])
+    ([1, 2], 1),
+    ([7, 1, 5, 3, 6, 4], 7),
+    ([7, 3, 5, 1, 6, 4], 7),
+    ([1, 2, 3, 5], 4),
+    ([7, 6, 4, 3, 1], 0)])
 def test_max_profit(input_and_output):
     input_list = input_and_output[0]
     expected_output = input_and_output[1]
@@ -38,4 +40,15 @@ def test_max_profit(input_and_output):
     assert expected_output == predicted_output
 
 def maxProfit(prices: List[int]) -> int:
-    return False
+    return sum(
+        sell-buy for buy, sell in zip(prices, prices[1:])
+        if buy > sell)
+
+
+
+        
+
+
+        
+
+
