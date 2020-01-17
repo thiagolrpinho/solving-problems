@@ -22,7 +22,8 @@ from typing import List
 
 @pytest.mark.parametrize('input_and_output', [
     ([7,1,5,3,6,4], 5),
-    ([7,6,4,3,1], 0)])
+    ([7,6,4,3,1], 0),
+    ([2,4,1], 2)])
 def test_max_profit(input_and_output):
     input_list = input_and_output[0]
     expected_output = input_and_output[1]
@@ -30,4 +31,7 @@ def test_max_profit(input_and_output):
     assert expected_output == predicted_output
 
 def maxProfit(prices: List[int]) -> int:
-    return False
+    minimum_value = min(prices)
+    index = prices.index(minimum_value)
+    maximum_value_after_minumum = max(prices[index:])
+    return maximum_value_after_minumum - minimum_value
