@@ -38,28 +38,30 @@ def test_title_to_number(input_and_output):
 
 
 def mergeTwoLists(l1: ListNode, l2: ListNode) -> ListNode:
-    heap = [
-            (l1.val, 0, l1, l1.next),
-            (l2.val, 1, l2, l2.next)]
-    heapq.heapify(heap)
-    last_current_node = None
-    while heap:
-        val, parity_disambiguity, current_node, old_next_node = heapq.heappop(heap)
-        current_node.next = last_current_node
-        last_current_node = current_node
-        if old_next_node is not None:
-            next_tuple = (
-                            old_next_node.val,
-                            parity_disambiguity,
-                            old_next_node,
-                            old_next_node.next)
-            heapq.heappush(heap, next_tuple)
+    if l1 is None:
+        return l2
+    elif l2 is None:
+        return l1
+    
+    if l2.val < l1.val:
+        first_node = l2
+        l2 = l2.next
+    else:
+        first_node = l1
+        l1 = l1.next
 
-    prev = None
-    current = last_current_node 
-    while(current is not None):
-        next = current.next
-        current.next = prev 
-        prev = current 
-        current = next
-    return prev
+    temp_node = first_node
+    while(l1 and l2):
+        if l2.val < l1.val:
+            temp_node.next = l2
+            temp_node = temp_node.next
+            l2 = l2.next
+        else:
+            temp_node.next = l1
+            temp_node = temp_node.next
+            l1 = l1.next
+    if l1 is not None:
+        temp_node.next = l1
+    elif l2 is not None:
+        temp_node.next = l2
+    return first_node
