@@ -14,7 +14,7 @@ import heapq
 class ListNode:
      def __init__(self, x, next):
          self.val = x
-         self.next = None
+         self.next = next
 
 
 @pytest.mark.parametrize('input_and_output', [
@@ -26,48 +26,40 @@ class ListNode:
 def test_title_to_number(input_and_output):
     input_first_node = input_and_output[0][0]
     input_second_node = input_and_output[0][1]
-    expected_output = input_and_output[1]
+    expected_output = input_and_output[1][::-1]
     predicted_output = mergeTwoLists(input_first_node, input_second_node)
     last_node = predicted_output
     while(last_node):
-        assert last_node.val == expected_output[::-1].pop()
+        print(last_node.val)
+        expected_val = expected_output.pop()
+        assert last_node.val == expected_val
         last_node = last_node.next
+    assert len(expected_output) == 0
 
 
 def mergeTwoLists(l1: ListNode, l2: ListNode) -> ListNode:
-    list_of_sorted_lists = [[], []]
-    last_node = l1
-    while last_node:
-        list_of_sorted_lists[0].append(last_node.val)
-        last_node = last_node.next
-    
-    last_node = l2
-    while last_node:
-        list_of_sorted_lists[1].append(last_node.val)
-        last_node = last_node.next
-
-    heap = []
-    final_sorted_list = []
     heap = [
-        (sublist[0], list_index, 0) 
-        for list_index, sublist in enumerate(list_of_sorted_lists) if sublist]
+            (l1.val, 0, l1, l1.next),
+            (l2.val, 1, l2, l2.next)]
     heapq.heapify(heap)
-    # Here we have a heap with the first elements of each sublist
+    last_current_node = None
     while heap:
-        # Now we have to pop the smaller element of the heap
-        item, list_index, item_index = heapq.heappop(heap)
-
-        final_sorted_list.append(item)
-        # Then for each element we take we look for other inside that element initial sublist
-        # Till they're over
-        if item_index + 1 < len(list_of_sorted_lists[list_index]):
-            next_tuple = (list_of_sorted_lists[list_index][item_index+1],
-                            list_index, 
-                            item_index+1)
+        val, parity_disambiguity, current_node, old_next_node = heapq.heappop(heap)
+        current_node.next = last_current_node
+        last_current_node = current_node
+        if old_next_node is not None:
+            next_tuple = (
+                            old_next_node.val,
+                            parity_disambiguity,
+                            old_next_node,
+                            old_next_node.next)
             heapq.heappush(heap, next_tuple)
 
-    last_node = None
-    for val in final_sorted_list[::-1]:
-        last_node = ListNode(val, last_node)
-
-    return last_node
+    prev = None
+    current = last_current_node 
+    while(current is not None):
+        next = current.next
+        current.next = prev 
+        prev = current 
+        current = next
+    return prev
