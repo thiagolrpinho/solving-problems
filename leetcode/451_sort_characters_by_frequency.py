@@ -38,7 +38,7 @@ import pytest
 from collections import Counter
 
 @pytest.mark.parametrize('input_and_output', [
-    ("tree", "eert"),
+    ("tree", "eetr"),
     ("cccaaa", "cccaaa"),
     ("Aabb", "bbAa")])
 def test_frequency_sort(input_and_output):
@@ -49,4 +49,10 @@ def test_frequency_sort(input_and_output):
 
 
 def frequencySort(s: str) -> int:
-    return False
+    letters_count = Counter(s)
+    sorted_string = ""
+    for letter, times in letters_count.most_common():
+        for _ in range(times):
+            sorted_string += letter
+
+    return sorted_string
