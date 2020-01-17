@@ -39,10 +39,9 @@ def test_title_to_number(input_and_output):
 
 
 def titleToNumber(s: str) -> int:
-    start_value = 64  # A in decimal is 65, so if we subtract 64 it value is 1
-    numeric_base = 26  # Every new letter is a potency of 26 by an index
-    sum = 0
-    for i, letter in enumerate(s[::-1]):
-        sum += (ord(letter) - start_value) * numeric_base ** i
+    sum = base = 0
+    for i in range(len(s)-1, -1, -1):
+        sum += (ord(s[i]) - 64) * 26 ** base
+        base += 1
     return sum
 
