@@ -24,4 +24,4 @@ def test_get_sum(input_and_output):
 
 
 def getSum(a: int, b: int) -> int:
-    return False
+    return sum([a, b])
