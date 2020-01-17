@@ -30,8 +30,9 @@ def test_max_profit(input_and_output):
     predicted_output = maxProfit(input_list)
     assert expected_output == predicted_output
 
+
 def maxProfit(prices: List[int]) -> int:
-    minimum_value = min(prices)
-    index = prices.index(minimum_value)
-    maximum_value_after_minumum = max(prices[index:])
-    return maximum_value_after_minumum - minimum_value
+    best_price, profit = float('inf'), 0
+    for price in prices:
+        best_price, profit = min(best_price, price), max(profit, price-best_price)
+    return profit
