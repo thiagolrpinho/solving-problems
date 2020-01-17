@@ -84,51 +84,52 @@ import heapq
 @pytest.mark.parametrize('sorting_function', [("brute_force_sort_lists"), ("heap_sort_lists")])
 
 def test_merge_sort_list(lists_of_sorted_lists_and_right_answer, sorting_function):
-  sorted_list = []
-  list_of_sorted_lists = lists_of_sorted_lists_and_right_answer[0]
-  right_answer = lists_of_sorted_lists_and_right_answer[1]
-  local_dictionary = locals()
-  exec("sorted_list =" + sorting_function + "(list_of_sorted_lists)", globals(), local_dictionary)
-  sorted_list = local_dictionary['sorted_list']
-  assert right_answer == sorted_list
+    sorted_list = []
+    list_of_sorted_lists = lists_of_sorted_lists_and_right_answer[0]
+    right_answer = lists_of_sorted_lists_and_right_answer[1]
+    local_dictionary = locals()
+    exec("sorted_list =" + sorting_function + "(list_of_sorted_lists)", globals(), local_dictionary)
+    sorted_list = local_dictionary['sorted_list']
+    assert right_answer == sorted_list
 
 def flatten_list(list_of_sorted_lists):
-  sorted_list = []
-  for sublist in list_of_sorted_lists:
-    for item in sublist:
-      sorted_list.append(item)
-  return sorted_list
+    sorted_list = []
+    for sublist in list_of_sorted_lists:
+        for item in sublist:
+            sorted_list.append(item)
+    return sorted_list
 
 def brute_force_sort_lists(list_of_sorted_lists):
-  sorted_list = []
-  for sublist in list_of_sorted_lists:
-    for item in sublist:
-      sorted_list.append(item)
-  sorted_list.sort()
-  return sorted_list
+    sorted_list = []
+    for sublist in list_of_sorted_lists:
+        for item in sublist:
+            sorted_list.append(item)
+    sorted_list.sort()
+    return sorted_list
 
 def heap_sort_lists(list_of_sorted_lists):
-  ''' Takes a lists of sorted lists and returns
-  a single element with all elements sorted '''
-  heap = []
-  final_sorted_list = []
-  heap = [
-    (sublist[0], list_index, 0) 
-    for list_index, sublist in enumerate(list_of_sorted_lists) if sublist]
-  heapq.heapify(heap)
-  # Here we have a heap with the first elements of each sublist
-  while heap:
-    # Now we have to pop the smaller element of the heap
-    item, list_index, item_index = heapq.heappop(heap)
+    ''' Takes a lists of sorted lists and returns
+    a single element with all elements sorted '''
+    heap = []
+    final_sorted_list = []
+    heap = [
+        (sublist[0], list_index, 0) 
+        for list_index, sublist in enumerate(list_of_sorted_lists) if sublist]
+    print(heap)
+    heapq.heapify(heap)
+    # Here we have a heap with the first elements of each sublist
+    while heap:
+        # Now we have to pop the smaller element of the heap
+        item, list_index, item_index = heapq.heappop(heap)
 
-    final_sorted_list.append(item)
-    # Then for each element we take we look for other inside that element initial sublist
-    # Till they're over
-    if item_index + 1 < len(list_of_sorted_lists[list_index]):
-      next_tuple = (list_of_sorted_lists[list_index][item_index+1],
-                    list_index, 
-                    item_index+1)
-      heapq.heappush(heap, next_tuple)
-  return final_sorted_list
+        final_sorted_list.append(item)
+        # Then for each element we take we look for other inside that element initial sublist
+        # Till they're over
+        if item_index + 1 < len(list_of_sorted_lists[list_index]):
+            next_tuple = (list_of_sorted_lists[list_index][item_index+1],
+                            list_index, 
+                            item_index+1)
+            heapq.heappush(heap, next_tuple)
+    return final_sorted_list
 
 
