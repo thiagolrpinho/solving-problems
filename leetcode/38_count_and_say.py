@@ -49,4 +49,24 @@ def test_count_and_say(input_and_output):
 
 
 def countAndSay(n: int) -> str:
-    return False
+    count_say_list = ["1"]
+    for i in range(1, n):
+        last_word = count_say_list[i-1]
+        ''' Look at the last count and say word '''
+
+        j = 0
+        count_repeated = 0
+        last_letter = last_word[0]
+        next_word = ""
+        while j < len(last_word):
+            if last_word[j] == last_letter:
+                count_repeated += 1
+                j += 1
+            else:
+                next_word += str(count_repeated) + last_letter
+                last_letter = last_word[j]
+                j += 1
+        next_word += str(count_repeated) + last_letter
+        count_say_list.append(next_word)
+    return count_say_list[n-1]
+        
