@@ -37,13 +37,20 @@ def test_climb_stairs(input_and_output):
 
 
 @lru_cache(None)
-def climbStairs(n: int) -> int:
+def climbStairs_recursive(n: int) -> int:
     if n == 1:
         return 1
     elif n == 2:
         return 2
     else:
         return climbStairs(n-1) + climbStairs(n-2)
+
+def climbStairs(n: int) -> int:
+    stairs = [1, 2]
+    for i in range(2, n):
+        number_of_steps = stairs[i - 1] + stairs[i-2]
+        stairs.append(number_of_steps)
+    return stairs[n-1]
 
 
 def partition_climbStairs(n: int) -> int:
