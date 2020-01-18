@@ -35,6 +35,7 @@ and "11" which is "1211".
 '''
 
 import pytest
+from itertools import groupby
 
 @pytest.mark.parametrize('input_and_output', [
     (4, "1211"),
@@ -52,27 +53,11 @@ def test_count_and_say(input_and_output):
 
 
 def countAndSay(n: int) -> str:
-    ''' Iterative approach with memoization '''
-    count_say_list = ["1"]
-    for i in range(1, n):
-        last_word = count_say_list[i-1]
-        ''' Look at the last count and say word '''
-        count_repeated = 0
-        last_letter = last_word[0]
-        next_word = ""
-        for character in last_word:
-            ''' Then we count how many letter are repetead '''
-            if character == last_letter:
-                count_repeated += 1
-            else:
-                ''' if the letter change, then we add how many
-                    times the last letter was count with it
-                    then reset the count '''
-                next_word += str(count_repeated) + last_letter
-                last_letter = character
-                count_repeated = 1
-        next_word += str(count_repeated) + last_letter
-        ''' The last time is needed so we can store the last repetition '''
-        count_say_list.append(next_word)
-    return count_say_list[n-1]
+    #Based on StefanPochmann solution
+    last_count_and_say_word = '1'
+    for _ in range(n - 1):
+        last_count_and_say_word = ''.join(
+            str(len(list(group))) + digit
+            for digit, group in groupby(last_count_and_say_word))
+    return last_count_and_say_word
         
