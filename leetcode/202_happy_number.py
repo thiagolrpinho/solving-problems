@@ -31,6 +31,7 @@ def test_is_happy(input_and_output):
     predicted_output = isHappy(input_integer)
     assert predicted_output == expected_output
 
+
 def isHappy(n: int) -> bool:
     found_numbers = set()
     number_as_string = str(n)
@@ -47,5 +48,4 @@ def isHappy(n: int) -> bool:
             found_numbers.add(new_number)
             number_as_string = str(new_number)
             new_number = 0
-    
 
