@@ -53,7 +53,7 @@ def test_count_and_say(input_and_output):
 
 
 def countAndSay(n: int) -> str:
-    #Based on StefanPochmann solution
+    # Based on StefanPochmann solution
     last_count_and_say_word = '1'
     for _ in range(n - 1):
         last_count_and_say_word = ''.join(
