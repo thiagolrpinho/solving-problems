@@ -72,25 +72,3 @@ def partition_climbStairs(n: int) -> int:
         last_index -= 1
         index += 1
     
-    return solutions
-
-
-'''
-    partitions = [0 for i in range(n + 1)]
-    solutions = []
-    index = 1
-    partitions[1] = n
-    while index != 0:
-        x = partitions[index - 1] + 1
-        y = partitions[index] - 1
-        print(x, y)
-        index -= 1
-        while x <= y:
-            partitions[index] = x
-            print(partitions)
-            y -= x
-            index += 1
-        partitions[index] = x + y
-        solutions.append(partitions[:index + 1])
-    return len(solutions)
-'''
