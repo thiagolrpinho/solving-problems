@@ -21,7 +21,9 @@ import pytest
 
 
 @pytest.mark.parametrize('input_and_output', [
-    (19, True)
+    (19, True),
+    (1, True),
+    (2, )
     ])
 def test_is_happy(input_and_output):
     input_integer = input_and_output[0]
@@ -30,5 +32,20 @@ def test_is_happy(input_and_output):
     assert predicted_output == expected_output
 
 def isHappy(n: int) -> bool:
-    return False
+    found_numbers = set()
+    number_as_string = str(n)
+    new_number = 0
+    while True:
+        for character in number_as_string:
+            new_number += int(character)**2
+
+        if new_number == 1:
+            return True
+        elif new_number in found_numbers:
+            return False
+        else:
+            found_numbers.add(new_number)
+            number_as_string = str(new_number)
+            new_number = 0
+    
 
