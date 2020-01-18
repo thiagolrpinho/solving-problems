@@ -33,7 +33,7 @@ The two tuples are:
 '''
 import pytest
 from typing import List # Need to import this so we can use List[int] in args
-
+import collections
 @pytest.mark.parametrize('input_and_output', [
     (([1, 2], [-2, -1], [-1, 2], [0, 2]), 2),
     (([-1, -1], [-1, 1], [-1, 1], [1, -1]), 6)
@@ -53,14 +53,6 @@ def test_three_sum(input_and_output):
 
 def fourSumCount(
         A: List[int], B: List[int], C: List[int], D: List[int]) -> int:
-    a_set, b_set = set(A), set(B)
-    c_set, d_set = set(C), set(D)
-    iterations_count = 0
-    tuples_found = 0
-    for a_anchor in a_set:
-        for b_anchor in b_set:
-            for c_anchor in c_set:
-                if (a_anchor + b_anchor + c_anchor) * -1 in d_set:
-                    tuples_found += 1
-                iterations_count += 1
-    return tuples_found
+    ''' Solution created by StefanPochmann '''
+    AB = collections.Counter(a+b for a in A for b in B)
+    return sum(AB[-c-d] for c in C for d in D)
