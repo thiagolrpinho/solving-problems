@@ -17,7 +17,8 @@ import pytest
 from math import factorial
 @pytest.mark.parametrize('input_and_output', [
     (3, 0),
-    (5, 1)
+    (5, 1),
+    (10, 2)
     ])
 def test_trailing_zeroes(input_and_output):
     input_integer = input_and_output[0]
@@ -26,13 +27,17 @@ def test_trailing_zeroes(input_and_output):
     assert predicted_output == expected_output
 
 def trailingZeroes(n: int) -> int:
+    '''The number of trailling zeros
+        if affected by primes five and two in the factorial.
+        As the quantity of the two number are always equal
+        or greater than the quantity fives we can use just
+        the fives and it's potencies to solve it
+    '''
     if n < 0:
         return 0
-    factorial_string = str(factorial(n))
+    division_factor = 5
     number_of_trailing_zeroes = 0
-    for i in range(len(factorial_string) - 1, -1, -1):
-        if factorial_string[i] == '0':
-            number_of_trailing_zeroes += 1
-        else:
-            break
+    while(n/division_factor >= 1):
+        number_of_trailing_zeroes += int(n/division_factor)
+        division_factor *= 5
     return number_of_trailing_zeroes
