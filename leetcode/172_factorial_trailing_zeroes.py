@@ -14,7 +14,7 @@ Explanation: 5! = 120, one trailing zero.
 Note: Your solution should be in logarithmic time complexity.
 '''
 import pytest 
-from math import factorial
+
 @pytest.mark.parametrize('input_and_output', [
     (3, 0),
     (5, 1),
