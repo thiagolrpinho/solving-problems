@@ -30,7 +30,8 @@ import heapq
     ([1, 2, 3, 1], 4),
     ([2, 7, 9, 3, 1], 12),
     ([2, 1, 1, 2], 4),
-    ([1, 7, 9, 4], 11)])
+    ([1, 7, 9, 4], 11),
+    ([4, 1, 2, 7, 5, 3, 1], 14)])
 def test_rob(input_and_output):
     input_integer = input_and_output[0]
     expected_output = input_and_output[1]
@@ -38,25 +39,14 @@ def test_rob(input_and_output):
     assert predicted_output == expected_output
 
 def rob(nums: List[int]) -> int:
-    ''' First we calculate the profit
-        of each index as it's value
-        subtracted by the value of
-        not choosing it's neigbours'''
-    heap_profits = [(a[1]+a[2]-a[0], i) for i, a in enumerate(zip(
-        nums, nums[1:]+[0], [0]+nums[:-1]))]
-    ''' As we'll be working with a min-heap, we multiplied
-        the profit by minus 1 so the better profit is choosen first
-    '''
-    heapq.heapify(heap_profits)
-    final_value = 0
-    choosen_index = set()
-    while heap_profits:
-        ''' Now we have to pop the smaller element of the heap '''
-        profit, index = heapq.heappop(heap_profits)
-        if index+1 in choosen_index or index-1 in choosen_index:
-            continue
-        ''' If it's not an option already blocked by other choices,
-            we then add then as one choice '''
-        choosen_index.add(index)
-        final_value += nums[index]
-    return final_value
+    ''' Based on solution develop by prudentprogrammer '''
+    previous_number = current = 0
+    for num in nums:
+        before_previous = previous_number
+        ''' This represents the nums[i-2]th value '''
+        previous_number = current
+        ''' This represents the nums[i-1]th value '''
+        current = max(num + before_previous, previous_number)
+        ''' Here we compare if the current plus the one before previous is
+            as better choice than the previous'''
+    return current
