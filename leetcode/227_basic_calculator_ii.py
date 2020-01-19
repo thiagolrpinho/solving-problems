@@ -21,6 +21,8 @@ You may assume that the given expression is always valid.
 Do not use the eval built-in library function.
 '''
 import pytest
+import ast
+import operator
 
 @pytest.mark.parametrize('input_and_output', [
     ("3+2*2", 7),
@@ -33,5 +35,26 @@ def test_calculate(input_and_output):
     assert expected_output == predicted_output
 
 
+operators = {
+            ast.Add: operator.add, ast.Sub: operator.sub,
+            ast.Mult: operator.mul, ast.Div: operator.truediv}
+
+
 def calculate(s: str) -> int:
-    return False
+    # supported operators
+    result = 0
+    ''' Let's first search for * and / as they
+        have priority. '''
+    s = s.replace(' ', '')
+    parsed_string = ast.parse(s, mode="eval")
+    return evaluation(parsed_string.body)
+
+
+def evaluation(node) -> int:
+    
+    if isinstance(node, ast.Num): # <number>
+        return node.n
+    elif isinstance(node, ast.BinOp): # <left> <operator> <right>
+        return int(operators[type(node.op)](evaluation(node.left), evaluation(node.right)))
+    elif isinstance(node, ast.UnaryOp): # <operator> <operand> e.g., -1
+        return operators[type(node.op)](evaluation(node.operand))
