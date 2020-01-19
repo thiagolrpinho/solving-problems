@@ -24,7 +24,14 @@ class ListNode:
         ListNode(2, ListNode(4, ListNode(3, None))),
         ListNode(5, ListNode(6, ListNode(4, None)))],
         [7, 0, 8]),
-    ([ListNode(5, None), ListNode(5, None)], [0, 1])
+    ([
+        ListNode(5, None),
+        ListNode(5, None)],
+        [0, 1]),
+    ([
+        ListNode(0, None),
+        ListNode(7, ListNode(3, None))],
+        [7, 3])
     ])
 def test_add_two_numbers(input_and_output):
     input_first_node = input_and_output[0][0]
@@ -42,12 +49,26 @@ def test_add_two_numbers(input_and_output):
 
 
 def addTwoNumbers(l1: ListNode, l2: ListNode) -> ListNode:
-    summation = residue = 0
+    summation = residue = previous_last_node = 0
     first_node = l1
-    while(l1 and l2):
-        summation = (l1.val + l2.val) + residue
-        l1.val = summation % 10
+    while(l1 or l2):
+        summation = 0
+        if l1:
+            summation += l1.val
+        if l2:
+            summation += l2.val
+        summation += residue
+        if l1:
+            l1.val = summation % 10
+            previous_last_node = l1
+            l1 = l1.next
+        else:
+            previous_last_node.next = ListNode(summation % 10)
+            previous_last_node = previous_last_node.next
+
         residue = int(summation/10)
-        l1 = l1.next
-        l2 = l2.next
+        if l2:
+            l2 = l2.next
+    if residue:
+        previous_last_node.next = ListNode(residue)
     return first_node
