@@ -35,7 +35,7 @@ def trailingZeroes(n: int) -> int:
     '''
     division_factor = 5
     number_of_trailing_zeroes = 0
-    while(n//division_factor > 0):
-        number_of_trailing_zeroes += n//division_factor
+    while(n/division_factor >= 1):
+        number_of_trailing_zeroes += int(n/division_factor)
         division_factor *= 5
     return number_of_trailing_zeroes
