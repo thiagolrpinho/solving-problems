@@ -25,7 +25,8 @@ import pytest
 
 @pytest.mark.parametrize('input_and_output', [
     (["hello", "ll"], 2),
-    (["aaaaa", "bba"], -1)
+    (["aaaaa", "bba"], -1),
+    (["", ""], 0)
     ])
 def test_str_str(input_and_output):
     s_input_string = input_and_output[0][0]
@@ -35,4 +36,8 @@ def test_str_str(input_and_output):
     assert expected_output == predicted_output
 
 def strStr(haystack: str, needle: str) -> int:
-    return False
+    if not needle or needle not in haystack:
+        return -1
+    for i in range(len(haystack)):
+        if haystack[i:i+len(needle)] == needle:
+            return i
