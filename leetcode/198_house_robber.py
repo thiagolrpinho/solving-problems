@@ -27,8 +27,8 @@ import pytest
 from typing import List
 @pytest.mark.parametrize('input_and_output', [
     ([1, 2, 3, 1], 4),
-    ([2, 7, 9, 3, 1], 12)
-    ])
+    ([2, 7, 9, 3, 1], 12),
+    ([2, 1, 1, 2], 4)])
 def test_rob(input_and_output):
     input_integer = input_and_output[0]
     expected_output = input_and_output[1]
@@ -36,4 +36,4 @@ def test_rob(input_and_output):
     assert predicted_output == expected_output
 
 def rob(nums: List[int]) -> int:
-    return False
+    return max(map(sum, [nums[0:len(nums):2], nums[1:len(nums):2]]))
