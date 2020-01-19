@@ -33,11 +33,9 @@ def trailingZeroes(n: int) -> int:
         or greater than the quantity fives we can use just
         the fives and it's potencies to solve it
     '''
-    if n < 0:
-        return 0
     division_factor = 5
     number_of_trailing_zeroes = 0
-    while(n/division_factor >= 1):
-        number_of_trailing_zeroes += int(n/division_factor)
+    while(n//division_factor > 0):
+        number_of_trailing_zeroes += n//division_factor
         division_factor *= 5
     return number_of_trailing_zeroes
