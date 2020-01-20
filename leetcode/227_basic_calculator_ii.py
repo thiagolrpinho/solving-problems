@@ -27,34 +27,55 @@ import operator
 @pytest.mark.parametrize('input_and_output', [
     ("3+2*2", 7),
     (" 3/2 ", 1),
-    (" 3+5 / 2 ", 5)])
+    (" 3+5 / 2 ", 5),
+    ("42", 42)])
 def test_calculate(input_and_output):
     input_string = input_and_output[0]
     expected_output = input_and_output[1]
     predicted_output = calculate(input_string)
     assert expected_output == predicted_output
 
-
-operators = {
-            ast.Add: operator.add, ast.Sub: operator.sub,
-            ast.Mult: operator.mul, ast.Div: operator.truediv}
-
-
 def calculate(s: str) -> int:
-    # supported operators
-    result = 0
-    ''' Let's first search for * and / as they
-        have priority. '''
-    s = s.replace(' ', '')
-    parsed_string = ast.parse(s, mode="eval")
-    return evaluation(parsed_string.body)
+    number_stack = []
+    number = ''
+    last_operator = '+'
+    i = 0
+    length = len(s)
+    while i < length:
+        if s[i] == ' ':
+            i += 1
+            continue
+        if s[i].isdigit():
+            number += s[i]
+            j = i + 1
+            while j < length and s[j].isdigit():
+                number += s[j]
+                j += 1
+            i = j - 1
+        else:
+            if last_operator == "+":
+                number_stack.append(int(number))
+            elif last_operator == '-':
+                number_stack.append(-int(number))
+            elif last_operator == '*':
+                number_stack.append(int(number) * number_stack.pop())
+            else:
+                divisor = int(number)
+                number_stack.append(int(number_stack.pop()/divisor))
+            last_operator = s[i]
+            number = ''
+        i += 1
+    if number:
+        if last_operator == "+":
+            number_stack.append(int(number))
+        elif last_operator == '-':
+            number_stack.append(-int(number))
+        elif last_operator == '*':
+            number_stack.append(int(number) * number_stack.pop())
+        else:
+            divisor = int(number)
+            number_stack.append(int(number_stack.pop()/divisor))
+    return sum(number_stack)
+            
 
 
-def evaluation(node) -> int:
-    
-    if isinstance(node, ast.Num): # <number>
-        return node.n
-    elif isinstance(node, ast.BinOp): # <left> <operator> <right>
-        return int(operators[type(node.op)](evaluation(node.left), evaluation(node.right)))
-    elif isinstance(node, ast.UnaryOp): # <operator> <operand> e.g., -1
-        return operators[type(node.op)](evaluation(node.operand))
