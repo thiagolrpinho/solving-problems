@@ -53,26 +53,26 @@ class TreeNode:
 
 def sortedArrayToBST(nums: List[int]) -> TreeNode:
     if not nums:
-            return None
+        return None
     root_index = int(len(nums)/2)
     root = TreeNode(nums[root_index])
-    list_stack = [(root, nums[:root_index], nums[root_index+1:])]
+    list_stack = [(root, (0, root_index), (root_index+1, len(nums)))]
     while list_stack:
-        current_node, left_slice, right_slice = list_stack.pop()
-        if left_slice:
-            left_index = int(len(left_slice)/2)
-            current_node.left = TreeNode(left_slice[left_index])
+        current_node, lower_tuple, upper_tuple = list_stack.pop()
+        if lower_tuple[0] < lower_tuple[1]:
+            left_index = lower_tuple[0] + int((lower_tuple[1] - lower_tuple[0])/2)
+            current_node.left = TreeNode(nums[left_index])
             list_stack.append((
                 current_node.left,
-                left_slice[:left_index],
-                left_slice[left_index+1:]))
-        if right_slice:
-            right_index = int(len(right_slice)/2)
-            current_node.right = TreeNode(right_slice[right_index])
+                (lower_tuple[0], left_index),
+                (left_index+1, lower_tuple[1])))
+        if upper_tuple[0] < upper_tuple[1]:
+            right_index = upper_tuple[0] + int((upper_tuple[1] - upper_tuple[0])/2)
+            current_node.right = TreeNode(nums[right_index])
             list_stack.append((
                 current_node.right,
-                right_slice[:right_index],
-                right_slice[right_index+1:]))
+                (upper_tuple[0], right_index),
+                (right_index+1, upper_tuple[1])))
     return root
 
 
