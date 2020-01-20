@@ -38,3 +38,67 @@ class TreeNode:
 
 def sortedArrayToBST(nums: List[int]) -> TreeNode:
     return False
+
+# function to find height of binary tree
+def height(root):
+    # base condition when binary tree is empty
+    if root is None:
+        return 0
+    node_stack = [(1, root.left), (1, root.right)]
+    max_height = 1
+    while node_stack:
+        height, next_node = node_stack.pop()
+        while next_node:
+            height += 1
+            if height > max_height:
+                max_height = height
+            node_stack.append((height, next_node.right))
+            next_node = next_node.left
+
+    return max_height
+
+
+# function to check if tree is height-balanced or not
+def isBalanced(root):
+
+    # Base condition
+    if root is None:
+        return True
+
+    # for left and right subtree height
+    left_height = height(root.left)
+    right_height = height(root.right)
+    if abs(left_height - right_height) > 1:
+        return False
+
+    node_stack = [(root.left), (root.right)]
+    while node_stack:
+        next_node = node_stack.pop()
+        while next_node:
+            left_height = height(next_node.left)
+            right_height = height(next_node.right)
+            if abs(left_height - right_height) > 1:
+                return False
+            node_stack.append(next_node.right)
+            next_node = next_node.left
+    return True
+
+root = TreeNode(1) 
+root.left = TreeNode(2) 
+root.right = TreeNode(3) 
+root.left.left = TreeNode(4) 
+root.left.right = TreeNode(5) 
+root.right.left = TreeNode(6) 
+root.left.left.left = TreeNode(7)
+
+
+print(isBalanced(root))
+
+root = TreeNode(1) 
+root.left = TreeNode(2) 
+root.right = TreeNode(3) 
+root.left.left = TreeNode(4) 
+root.left.right = TreeNode(5) 
+root.left.left.left = TreeNode(8) 
+
+print(isBalanced(root))
