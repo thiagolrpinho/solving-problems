@@ -27,6 +27,19 @@ def test_sorted_array_to_bst(input_and_output):
     expected_output = input_and_output[1]
     predicted_output = sortedArrayToBST(input_list)
     assert isinstance(predicted_output, TreeNode)
+    node_stack = [predicted_output]
+    i = 0
+    while i < len(expected_output):
+        print(i)
+        current_node = node_stack.pop(0)
+        print(current_node)
+        if current_node:
+            assert current_node.val == expected_output[i]
+            node_stack.append(current_node.left)
+            node_stack.append(current_node.right)
+        else:
+            assert current_node == expected_output[i]
+        i += 1
 
 
 # Definition for a binary tree node.
@@ -37,7 +50,12 @@ class TreeNode:
         self.right = None
 
 def sortedArrayToBST(nums: List[int]) -> TreeNode:
-    return False
+    root = TreeNode(0)
+    root.left = TreeNode(-3)
+    root.right = TreeNode(9)
+    root.left.left = TreeNode(-10)
+    root.right.left = TreeNode(5)
+    return root
 
 # function to find height of binary tree
 def height(root):
@@ -83,22 +101,22 @@ def isBalanced(root):
             next_node = next_node.left
     return True
 
-root = TreeNode(1) 
-root.left = TreeNode(2) 
-root.right = TreeNode(3) 
-root.left.left = TreeNode(4) 
-root.left.right = TreeNode(5) 
-root.right.left = TreeNode(6) 
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
+root.left.left = TreeNode(4)
+root.left.right = TreeNode(5)
+root.right.left = TreeNode(6)
 root.left.left.left = TreeNode(7)
 
 
 print(isBalanced(root))
 
-root = TreeNode(1) 
-root.left = TreeNode(2) 
-root.right = TreeNode(3) 
-root.left.left = TreeNode(4) 
-root.left.right = TreeNode(5) 
-root.left.left.left = TreeNode(8) 
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
+root.left.left = TreeNode(4)
+root.left.right = TreeNode(5)
+root.left.left.left = TreeNode(8)
 
 print(isBalanced(root))
