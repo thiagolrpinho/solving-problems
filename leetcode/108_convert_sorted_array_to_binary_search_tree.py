@@ -18,20 +18,21 @@ One possible answer is: [0, -3, 9, -10, null, 5], which represents the following
 
 import pytest
 from typing import List
+from collections import deque
 
 @pytest.mark.parametrize('input_and_output', [
     ([-10, -3, 0, 5, 9], [0, -3, 9, -10, None, 5]),
-    ])
+    ([-10, -3, -1, 0, 5, 9], [0, -3, 9, -10, -1, 5])])
 def test_sorted_array_to_bst(input_and_output):
     input_list = input_and_output[0]
     expected_output = input_and_output[1]
     predicted_output = sortedArrayToBST(input_list)
     assert isinstance(predicted_output, TreeNode)
-    node_stack = [predicted_output]
+    node_stack = deque([predicted_output])
     i = 0
     while i < len(expected_output):
         print(i)
-        current_node = node_stack.pop(0)
+        current_node = node_stack.popleft()
         print(current_node)
         if current_node:
             assert current_node.val == expected_output[i]
@@ -49,13 +50,31 @@ class TreeNode:
         self.left = None
         self.right = None
 
+
 def sortedArrayToBST(nums: List[int]) -> TreeNode:
-    root = TreeNode(0)
-    root.left = TreeNode(-3)
-    root.right = TreeNode(9)
-    root.left.left = TreeNode(-10)
-    root.right.left = TreeNode(5)
+    if not nums:
+            return None
+    root_index = int(len(nums)/2)
+    root = TreeNode(nums[root_index])
+    list_stack = [(root, nums[:root_index], nums[root_index+1:])]
+    while list_stack:
+        current_node, left_slice, right_slice = list_stack.pop()
+        if left_slice:
+            left_index = int(len(left_slice)/2)
+            current_node.left = TreeNode(left_slice[left_index])
+            list_stack.append((
+                current_node.left,
+                left_slice[:left_index],
+                left_slice[left_index+1:]))
+        if right_slice:
+            right_index = int(len(right_slice)/2)
+            current_node.right = TreeNode(right_slice[right_index])
+            list_stack.append((
+                current_node.right,
+                right_slice[:right_index],
+                right_slice[right_index+1:]))
     return root
+
 
 # function to find height of binary tree
 def height(root):
@@ -100,6 +119,7 @@ def isBalanced(root):
             node_stack.append(next_node.right)
             next_node = next_node.left
     return True
+
 
 root = TreeNode(1)
 root.left = TreeNode(2)
