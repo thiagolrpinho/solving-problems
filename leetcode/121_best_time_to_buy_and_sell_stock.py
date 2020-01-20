@@ -34,5 +34,5 @@ def test_max_profit(input_and_output):
 def maxProfit(prices: List[int]) -> int:
     best_price, profit = float('inf'), 0
     for price in prices:
-        best_price, profit = min(best_price, price), max(profit, price-best_price)
+        best_price, profit = min(best_price, price), max(profit, price - best_price)
     return profit
