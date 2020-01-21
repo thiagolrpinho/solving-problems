@@ -24,6 +24,7 @@ that you cannot load all elements into the memory at once?
 '''
 import pytest
 from typing import List
+from collections import Counter
 
 @pytest.mark.parametrize('input_and_output', [
     (([1,2,2,1], [2,2]), [2,2]),
@@ -38,7 +39,11 @@ def test_intersect(input_and_output):
 
 
 def intersect(nums1: List[int], nums2: List[int]) -> List[int]:
-    return False
+    intersection_counter = Counter(nums1) & Counter(nums2)
+    return [
+        num for num in intersection_counter
+        for _ in range(intersection_counter[num])]
+
 
 
 
