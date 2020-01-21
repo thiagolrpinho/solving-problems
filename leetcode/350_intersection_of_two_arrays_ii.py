@@ -39,10 +39,17 @@ def test_intersect(input_and_output):
 
 
 def intersect(nums1: List[int], nums2: List[int]) -> List[int]:
-    intersection_counter = Counter(nums1) & Counter(nums2)
-    return [
-        num for num in intersection_counter
-        for _ in range(intersection_counter[num])]
+    found_numbers = dict()
+    for number in nums1:
+        if number not in found_numbers:
+            found_numbers[number] = [1, 0]
+        else:
+            found_numbers[number][0] += 1
+    for number in nums2:
+        if number in found_numbers:
+            found_numbers[number][1] += 1
+    return [key for key, val in found_numbers.items()
+            for times in range(min(val))]
 
 
 
