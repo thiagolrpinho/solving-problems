@@ -87,11 +87,11 @@ def getIntersectionNode(headA: ListNode, headB: ListNode) -> ListNode:
     if headA is None or headB is None:
         return None
     nodes_set = set()
-    while headA:
-        nodes_set.add(headA)
-        headA = headA.next
     while headB:
-        if headB in nodes_set:
-            break
+        nodes_set.add(headB)
         headB = headB.next
+    while headA:
+        if headA in nodes_set:
+            break
+        headA = headA.next
     return headB
