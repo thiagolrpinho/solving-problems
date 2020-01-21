@@ -81,10 +81,17 @@ def test_get_intersection_node(input_and_output):
             expected_val = expected_output.pop()
             assert last_node.val == expected_val
             last_node = last_node.next
-
-        if expected_output:
-            assert len(expected_output) == 0
+        assert len(expected_output) == 0
 
 def getIntersectionNode(headA: ListNode, headB: ListNode) -> ListNode:
-    return ListNode(0)
-    
+    if headA is None or headB is None:
+        return None
+    nodes_set = set()
+    while headA:
+        nodes_set.add(headA)
+        headA = headA.next
+    while headB:
+        if headB in nodes_set:
+            break
+        headB = headB.next
+    return headB
