@@ -28,7 +28,7 @@ from collections import Counter
 
 @pytest.mark.parametrize('input_and_output', [
     (([1,2,2,1], [2,2]), [2,2]),
-    (([4,9,5], [9,4,9,8,4]), [4,9]),
+    (([4,9,5], [9,4,9,8,4]), [9, 4]),
     ])
 def test_intersect(input_and_output):
     first_input_integer = input_and_output[0][0]
@@ -39,7 +39,7 @@ def test_intersect(input_and_output):
 
 
 def intersect(nums1: List[int], nums2: List[int]) -> List[int]:
-    found_numbers = dict()
+    found_numbers, intersection = {}, []
     for number in nums1:
         if number not in found_numbers:
             found_numbers[number] = [1, 0]
@@ -48,9 +48,9 @@ def intersect(nums1: List[int], nums2: List[int]) -> List[int]:
     for number in nums2:
         if number in found_numbers:
             found_numbers[number][1] += 1
-    return [key for key, val in found_numbers.items()
-            for times in range(min(val))]
-
+            if found_numbers[number][1] <= found_numbers[number][0]:
+                intersection.append(number)
+    return intersection
 
 
 
