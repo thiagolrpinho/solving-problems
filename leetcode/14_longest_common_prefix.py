@@ -30,16 +30,22 @@ def test_longest_common_prefix(input_and_output):
 
 
 def longestCommonPrefix(list_of_strings: List[str]) -> str:
+    ''' if we imagine a list of strings as a matrix of characters.
+        Then each string can be interpred as a line and each letter
+        position as a column'''
     if not list_of_strings:
         return ""
-    if len(list_of_strings) == 1:
-        return list_of_strings[0]
-    i = 0
-    smallest_length = min(map(len, list_of_strings))
-    while i < smallest_length:
-        for j in range(1, len(list_of_strings)):
-            print(i, j, list_of_strings)
-            if list_of_strings[j][i] != list_of_strings[j-1][i]:
-                return list_of_strings[0][:i]
-        i += 1
-    return list_of_strings[0][:i]
+    smallest_length = len(list_of_strings[0])
+    for string in list_of_strings:
+        if len(string) < smallest_length:
+            smallest_length = len(string)
+    horizontal_index = 0
+    while horizontal_index < smallest_length:
+        character = list_of_strings[0][horizontal_index]
+        vertical_index = 1
+        while vertical_index < len(list_of_strings):
+            if list_of_strings[vertical_index][horizontal_index] != character:
+                return list_of_strings[0][:horizontal_index]
+            vertical_index += 1
+        horizontal_index += 1
+    return list_of_strings[0][:horizontal_index]
