@@ -30,9 +30,9 @@ In Java, the compiler represents the signed integers using 2's complement notati
 import pytest
 
 @pytest.mark.parametrize('input_and_output', [
-    (11111111111111111111111111111101, 31),
-    (1011, 3),
-    (10000000, 1),
+    (int('11111111111111111111111111111101', 2), 31),
+    (int('10000000', 2), 1),
+    (int('1011', 2), 3),
     ])
 def test_hamming_weight(input_and_output):
     input_natural = input_and_output[0]
@@ -45,5 +45,5 @@ def hammingWeight(n: int) -> int:
     count = 0
     for i in range(32):
         num_bits = n & (1 << i)
-        count += 1 if num_bits != 0 else 0
+        count += n >> i
     return count
