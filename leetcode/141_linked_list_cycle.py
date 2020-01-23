@@ -60,4 +60,15 @@ def test_has_cycle(input_and_output):
 
 
 def hasCycle(head: ListNode) -> bool:
-    return False
+    if head is None:
+        return False
+    nodes_set = set()
+    has_cycle = False
+
+    while head:
+        if head in nodes_set:
+            has_cycle = True
+            break
+        nodes_set.add(head)
+        head = head.next
+    return has_cycle
