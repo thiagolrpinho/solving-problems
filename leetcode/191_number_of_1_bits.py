@@ -43,7 +43,7 @@ def test_hamming_weight(input_and_output):
 
 def hammingWeight(n: int) -> int:
     count = 0
-    while n:
-        count += n%2
-        n = int(n/2)
+    for i in range(32):
+        num_bits = n & (1 << i)
+        count += 1 if num_bits != 0 else 0
     return count
