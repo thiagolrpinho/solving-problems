@@ -26,11 +26,12 @@ linked list.
 
 import pytest
 
+
 # Definition for singly-linked list.
 class ListNode:
-     def __init__(self, x):
-         self.val = x
-         self.next = None
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 
 
 @pytest.mark.parametrize('input_and_output', [

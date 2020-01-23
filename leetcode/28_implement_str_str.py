@@ -21,7 +21,8 @@ For the purpose of this problem, we will return 0 when needle is an empty
 string. This is consistent to C's strstr() and Java's indexOf().
 '''
 
-import pytest 
+import pytest
+
 
 @pytest.mark.parametrize('input_and_output', [
     (["hello", "ll"], 2),
@@ -35,6 +36,7 @@ def test_str_str(input_and_output):
     expected_output = input_and_output[1]
     predicted_output = strStr(s_input_string, t_input_string)
     assert expected_output == predicted_output
+
 
 def strStr(haystack: str, needle: str) -> int:
     if not needle:
