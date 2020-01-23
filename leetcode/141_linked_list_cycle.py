@@ -60,15 +60,18 @@ def test_has_cycle(input_and_output):
 
 
 def hasCycle(head: ListNode) -> bool:
-    if head is None:
-        return False
-    nodes_set = set()
-    has_cycle = False
+    ''' This solution is faster than using a set.
+        Even though it's not as stable or intuitive '''
+    slow_reference = fast_reference = head
+    while (slow_reference and fast_reference and fast_reference.next):
+        slow_reference = slow_reference.next
+        fast_reference = fast_reference.next.next
+        ''' Finds the last node in n/2 operations '''
 
-    while head:
-        if head in nodes_set:
-            has_cycle = True
-            break
-        nodes_set.add(head)
-        head = head.next
-    return has_cycle
+        if slow_reference == fast_reference:
+            ''' If slow reference is on an even index node
+                and fast reference manages to reach it at the same time
+                then it has a cycle.
+            '''
+            return True
+    return False
