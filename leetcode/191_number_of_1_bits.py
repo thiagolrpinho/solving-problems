@@ -31,7 +31,7 @@ import pytest
 
 @pytest.mark.parametrize('input_and_output', [
     (11111111111111111111111111111101, 31),
-    (1011, 1),
+    (1011, 3),
     (10000000, 1),
     ])
 def test_hamming_weight(input_and_output):
@@ -42,4 +42,8 @@ def test_hamming_weight(input_and_output):
 
 
 def hammingWeight(n: int) -> int:
-    return False
+    count = 0
+    while n:
+        count += n%2
+        n = int(n/2)
+    return count
