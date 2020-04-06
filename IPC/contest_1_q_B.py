@@ -32,4 +32,4 @@ def test_smaller_divisible_number(input_and_output):
 
 
 def greater_sum_div_mul(num_a: int, num_b: int) -> int:
-    return False
+    return max([num_a + num_b, num_a - num_b, num_a * num_b])
