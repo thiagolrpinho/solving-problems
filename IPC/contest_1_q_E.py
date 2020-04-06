@@ -53,3 +53,11 @@ def maximum_sum(num_a: int, num_b: int, num_c: int, num_k: int) -> int:
     numbers.sort(reverse=True)
     numbers[0] *= 2**num_k
     return sum(numbers)
+
+''' Versao V judge'''
+line = input()
+num_a, num_b, num_c, num_k = [int(n) for n in line.split()][0]
+numbers = [num_a, num_b, num_c]
+numbers.sort(reverse=True)
+numbers[0] *= 2**num_k
+print(sum(numbers))

@@ -33,3 +33,8 @@ def test_smaller_divisible_number(input_and_output):
 
 def greater_sum_div_mul(num_a: int, num_b: int) -> int:
     return max([num_a + num_b, num_a - num_b, num_a * num_b])
+
+''' Versao V judge'''
+line = input()
+num_a, num_b = [int(n) for n in line.split()]
+print(max([num_a + num_b, num_a - num_b, num_a * num_b]))

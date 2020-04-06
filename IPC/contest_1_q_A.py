@@ -55,7 +55,8 @@ import pytest
 @pytest.mark.parametrize('input_and_output', [
     (3, 6),
     (10, 10),
-    (999999999, 1999999998)])
+    (999999999, 1999999998)
+])
 def test_smaller_divisible_number(input_and_output):
     first_divisible = input_and_output[0]
     expected_output = input_and_output[1]
@@ -68,3 +69,12 @@ def smaller_divisible_number(num: int) -> int:
     if num%2 != 0:
         smaller_divisible_number *= 2
     return smaller_divisible_number
+
+''' Versao V judge'''
+line = input()
+num = [int(n) for n in line.split()][0]
+print(num)
+smaller_divisible_number = num
+if num%2 != 0:
+    smaller_divisible_number *= 2
+print(smaller_divisible_number)
