@@ -22,16 +22,21 @@ there are more than   X  =  2   cats in total.
 import pytest
 
 @pytest.mark.parametrize('input_and_output', [
-    ( 3, 5, 4, "Yes"),
-    ( 2, 2, 6, "NO"),
-    ( 5, 3, 2, "NO")])
+    (3, 5, 4, "YES"),
+    (2, 2, 6, "NO"),
+    (5, 3, 2, "NO")])
 def test_cat_and_dogs(input_and_output):
     input_a = input_and_output[0]
     input_b = input_and_output[1]
-    expected_output = input_and_output[2]
-    predicted_output = cat_and_dogs(input_a, input_b)
+    input_c = input_and_output[2]
+    expected_output = input_and_output[3]
+    predicted_output = cat_and_dogs(input_a, input_b, input_c)
     assert expected_output == predicted_output
 
 
-def cat_and_dogs(num_a: int, num_b: int) -> int:
-    return False
+def cat_and_dogs(known_cat_num: int, unknow_num: int, expected_cat_num: int) -> int:
+    if (expected_cat_num < known_cat_num
+            or expected_cat_num - known_cat_num > unknow_num):
+        return "NO"
+    else:
+        return "YES"
