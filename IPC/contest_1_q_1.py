@@ -63,5 +63,8 @@ def test_smaller_divisible_number(input_and_output):
     assert expected_output == predicted_output
 
 
-def smaller_divisible_number(a: int) -> int:
-    return False
+def smaller_divisible_number(num: int) -> int:
+    smaller_divisible_number = num
+    if num%2 != 0:
+        smaller_divisible_number *= 2
+    return smaller_divisible_number
