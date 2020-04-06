@@ -42,4 +42,7 @@ def test_cake_adjacency(input_and_output):
 
 
 def cake_adjacency(num_a: int, num_b: int) -> int:
-    return False
+    is_it_possible = "Yay!"
+    if num_a > 8 or num_b > 8:
+        is_it_possible = ":("
+    return is_it_possible
