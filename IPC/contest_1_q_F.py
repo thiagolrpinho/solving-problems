@@ -23,7 +23,8 @@ import pytest
 
 @pytest.mark.parametrize('input_and_output', [
     (15, 6),
-    (100000, 10)])
+    (10, 10)
+    ])
 def test_digits_sum(input_and_output):
     input_a = input_and_output[0]
     expected_output = input_and_output[1]
@@ -32,4 +33,21 @@ def test_digits_sum(input_and_output):
 
 
 def digits_sum(num: int) -> int:
-    return False
+    number_of_sums = num//2 + 1 + 1*num % 2
+    smallest_sum = 100000
+    for i in range(1, number_of_sums):
+        first_number = i
+        second_number = num-i
+        summation = 0
+        while first_number and summation < smallest_sum:
+            summation += first_number % 10
+            first_number //= 10
+        while second_number and summation < smallest_sum:
+            summation += second_number % 10
+            second_number //= 10
+        if smallest_sum > summation:
+            smallest_sum = summation
+    return smallest_sum
+    
+    
+    
