@@ -4,7 +4,8 @@ There are three positive integers A , B and C written on a blackboard. E869120 p
 the following operation K times:
 Choose one integer written on the blackboard and let the chosen integer be n .
 Replace the chosen integer with 2 n . What is the largest possible sum of the
-integers written on the blackboard after K operations? Constraints A , B and C
+integers written on the blackboard after K operations?
+Constraints A , B and C
 are integers between 1 and 50 (inclusive). K is an integer between 1 and 10
 (inclusive). 
 Input
@@ -41,12 +42,14 @@ def test_maximum_sum(input_and_output):
     input_a = input_and_output[0]
     input_b = input_and_output[1]
     input_c = input_and_output[2]
-    input_d = input_and_output[2]
-    expected_output = input_and_output[3]
+    input_d = input_and_output[3]
+    expected_output = input_and_output[4]
     predicted_output = maximum_sum(input_a, input_b, input_c, input_d)
     assert expected_output == predicted_output
 
 
 def maximum_sum(num_a: int, num_b: int, num_c: int, num_k: int) -> int:
-    return  False
-
+    numbers = [num_a, num_b, num_c]
+    numbers.sort(reverse=True)
+    numbers[0] *= 2**num_k
+    return sum(numbers)
