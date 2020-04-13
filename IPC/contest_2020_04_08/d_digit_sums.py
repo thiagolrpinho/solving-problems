@@ -151,5 +151,4 @@ while num:
     num //= 10
 if original_number%summation == 0:
     value = "Yes"
-return value
-print(predicted_value)
+print(value)

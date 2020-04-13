@@ -130,8 +130,7 @@ def function(num_a, num_b, num_c):
     return area
 
 line = input()
-num = [int(n) for n in line.split()]
-sides = [num_a, num_b, num_c]
+sides= [int(n) for n in line.split()]
 sides.sort()
 area = round(sides[0] * sides[1]/2)
 print(area)
